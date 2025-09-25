@@ -1,0 +1,12 @@
+{
+  "name": "learn-your-way-app",
+  "version": "1.0.0",
+  "description": "AI-Augmented Textbook",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0"
+  }
+}
