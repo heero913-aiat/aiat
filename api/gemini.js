@@ -16,21 +16,20 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
+    // JSON 응답이 필요할 경우, 모델 설정에 generationConfig를 포함합니다.
+    const generationConfig = isJson ? { responseMimeType: "application/json" } : {};
+
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash-preview-05-20",
       systemInstruction: {
         parts: [{ text: systemInstruction || '' }],
         role: "model"
       },
+      generationConfig: generationConfig // 수정된 위치
     });
     
-    // 요청할 때 generationConfig를 올바른 구조로 포함합니다.
-    const generationConfig = isJson ? { responseMimeType: "application/json" } : {};
-    
-    const result = await model.generateContent({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: generationConfig
-    });
+    // generateContent에는 프롬프트만 직접 전달합니다.
+    const result = await model.generateContent(prompt);
 
     const response = await result.response;
     const text = response.text();
