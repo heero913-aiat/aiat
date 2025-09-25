@@ -7,16 +7,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Gowun Dodum', sans-serif; background-color: #f0f9ff; }
-    .setup-card { background:white; border-radius:24px; padding:2rem; box-shadow:0 10px 20px rgba(0,0,0,.1); }
-    .cute-input { border:2px solid #e5e7eb; border-radius:12px; padding:.75rem 1rem; }
-    .cute-input:focus { border-color:#38bdf8; outline:none; }
-    .cute-button { border-radius:12px; font-weight:700; padding:.75rem 1rem; }
-    .tab-btn.active { border-bottom:4px solid #38bdf8; font-weight:700; color:#0c4a6e; }
-    .quiz-option { border:2px solid #e5e7eb; border-radius:12px; padding:.75rem; }
-    .quiz-option.selected { background:#7dd3fc; border-color:#38bdf8; }
-    .quiz-option.correct { background:#a7f3d0; border-color:#34d399; }
-    .quiz-option.incorrect { background:#fecdd3; border-color:#fb7185; }
+    body { font-family:'Gowun Dodum',sans-serif; background:#f0f9ff; }
+    .setup-card{background:white;border-radius:24px;padding:2rem;box-shadow:0 10px 20px rgba(0,0,0,.1);}
+    .cute-input{border:2px solid #e5e7eb;border-radius:12px;padding:.75rem 1rem;}
+    .cute-button{border-radius:12px;font-weight:700;padding:.75rem 1rem;}
+    .tab-btn.active{border-bottom:4px solid #38bdf8;font-weight:700;color:#0c4a6e;}
+    .quiz-option{border:2px solid #e5e7eb;border-radius:12px;padding:.75rem;}
+    .quiz-option.selected{background:#7dd3fc;border-color:#38bdf8;}
+    .quiz-option.correct{background:#a7f3d0;border-color:#34d399;}
+    .quiz-option.incorrect{background:#fecdd3;border-color:#fb7185;}
   </style>
 </head>
 <body class="text-slate-800">
@@ -25,28 +24,20 @@
   <div id="setup-screen" class="min-h-screen flex items-center justify-center p-6">
     <div class="setup-card w-full max-w-lg">
       <h1 class="text-3xl font-bold text-sky-700 text-center">Learn Your Way 🚀</h1>
-      <p class="text-center text-gray-500 mt-2">AI와 함께 나만의 교과서를 만들어 보세요</p>
-
       <div class="mt-6 space-y-4">
-        <div>
-          <label class="block text-sm">학년</label>
+        <div><label class="block text-sm">학년</label>
           <select id="grade-level" class="cute-input w-full">
-            <option>초등학교 3학년</option>
-            <option>초등학교 4학년</option>
-            <option>초등학교 5학년</option>
-            <option>초등학교 6학년</option>
+            <option>초등학교 3학년</option><option>초등학교 4학년</option>
+            <option>초등학교 5학년</option><option>초등학교 6학년</option>
           </select>
         </div>
-        <div>
-          <label class="block text-sm">관심사</label>
+        <div><label class="block text-sm">관심사</label>
           <input id="interests" class="cute-input w-full" placeholder="예: 게임, K-POP, 공룡">
         </div>
-        <div>
-          <label class="block text-sm">학습 주제</label>
+        <div><label class="block text-sm">학습 주제</label>
           <input id="topic-input" class="cute-input w-full" placeholder="예: 세종대왕, 전자석">
         </div>
-        <div>
-          <label class="block text-sm">AI 페르소나</label>
+        <div><label class="block text-sm">AI 페르소나</label>
           <select id="voice-persona" class="cute-input w-full">
             <option>👩‍🏫 친절한 선생님</option>
             <option>🎤 활기찬 아이돌</option>
@@ -54,7 +45,6 @@
           </select>
         </div>
       </div>
-
       <button id="start-learning-btn" class="mt-6 w-full bg-sky-500 hover:bg-sky-600 text-white cute-button">
         나만의 교과서 만들기
       </button>
@@ -80,9 +70,9 @@
     </header>
 
     <nav class="flex border-b">
-      <button class="tab-btn active flex-1 py-2" data-tab="text">📖 몰입형 텍스트</button>
-      <button class="tab-btn flex-1 py-2" data-tab="slides">🖥️ 핵심 슬라이드</button>
-      <button class="tab-btn flex-1 py-2" data-tab="quiz">❓ 형성 퀴즈</button>
+      <button class="tab-btn active flex-1 py-2" data-tab="text">📖 텍스트</button>
+      <button class="tab-btn flex-1 py-2" data-tab="slides">🖥️ 슬라이드</button>
+      <button class="tab-btn flex-1 py-2" data-tab="quiz">❓ 퀴즈</button>
     </nav>
 
     <div class="mt-6">
@@ -93,139 +83,82 @@
   </div>
 
   <script type="module">
-    const setupScreen = document.getElementById('setup-screen');
-    const mainAppScreen = document.getElementById('main-app-screen');
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const loadingMessage = document.getElementById('loading-message');
-    const startBtn = document.getElementById('start-learning-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    const tabs = document.querySelectorAll('.tab-btn');
-    const textTab = document.getElementById('text-content');
-    const slidesTab = document.getElementById('slides-content');
-    const quizTab = document.getElementById('quiz-content');
+    const setupScreen=document.getElementById('setup-screen');
+    const mainAppScreen=document.getElementById('main-app-screen');
+    const loadingOverlay=document.getElementById('loading-overlay');
+    const loadingMessage=document.getElementById('loading-message');
+    const startBtn=document.getElementById('start-learning-btn');
+    const resetBtn=document.getElementById('reset-btn');
+    const tabs=document.querySelectorAll('.tab-btn');
+    const textTab=document.getElementById('text-content');
+    const slidesTab=document.getElementById('slides-content');
+    const quizTab=document.getElementById('quiz-content');
+    let userProfile={},slidesData=[],quizData=[],audios=[];
 
-    let userProfile = {};
-    let slidesData = [];
-    let quizData = [];
-
-    async function callGemini(prompt, systemInstruction, isJson=false) {
-      const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
-        systemInstruction: { parts: [{ text: systemInstruction }] }
-      };
-      if (isJson) payload.generationConfig = { responseMimeType: "application/json" };
-      try {
-        const res = await fetch("/api/gemini", {
-          method:"POST", headers:{"Content-Type":"application/json"},
-          body:JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error("API 요청 실패 " + res.status);
-        const data = await res.json();
-        return data?.candidates?.[0]?.content?.parts?.[0]?.text || "응답 없음";
-      } catch(err) {
-        console.error(err);
-        return isJson? "{}" : "에러: "+err.message;
-      }
+    async function callGemini(prompt, systemInstruction,isJson=false){
+      const payload={contents:[{parts:[{text:prompt}]}],
+        systemInstruction:{parts:[{text:systemInstruction}]}};
+      if(isJson)payload.generationConfig={responseMimeType:"application/json"};
+      try{
+        const res=await fetch("/api/gemini",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+        if(!res.ok)throw new Error("API 요청 실패 "+res.status);
+        const data=await res.json();
+        return data?.candidates?.[0]?.content?.parts?.[0]?.text||"응답 없음";
+      }catch(e){console.error(e);return isJson?"{}":"에러:"+e.message;}
     }
 
-    startBtn.addEventListener("click", async ()=>{
-      const topic = document.getElementById("topic-input").value.trim();
-      if (!topic) return alert("주제를 입력해주세요!");
+    startBtn.addEventListener("click",async()=>{
+      const topic=document.getElementById("topic-input").value.trim();
+      if(!topic)return alert("주제를 입력하세요!");
+      userProfile={grade:document.getElementById("grade-level").value,interests:document.getElementById("interests").value,topic,persona:document.getElementById("voice-persona").value};
+      setupScreen.classList.add("hidden");loadingOverlay.classList.remove("hidden");
+      loadingMessage.textContent=`'${topic}' 준비 중...`;
 
-      userProfile = {
-        grade: document.getElementById("grade-level").value,
-        interests: document.getElementById("interests").value,
-        topic,
-        persona: document.getElementById("voice-persona").value
-      };
-
-      setupScreen.classList.add("hidden");
-      loadingOverlay.classList.remove("hidden");
-      loadingMessage.textContent = `'${topic}' 자료 준비 중...`;
-
-      // 몰입형 텍스트
-      const textInstruction = "초등학생 눈높이에 맞는 학습 설명을 한국어로 작성";
-      const baseText = await callGemini(topic, textInstruction);
-      textTab.innerHTML = `<h2>${topic} 학습</h2><p>${baseText}</p>`;
+      // 텍스트
+      const baseText=await callGemini(topic,"초등학생 눈높이 설명 한국어");
+      textTab.innerHTML=`<h2>${topic}</h2><p>${baseText}</p>`;
 
       // 슬라이드
-      const slideInstruction = "학습 내용을 3~5개의 핵심 슬라이드(title, points 배열) JSON으로";
-      const slidesJson = await callGemini(topic, slideInstruction, true);
-      try { slidesData = JSON.parse(slidesJson); } catch{ slidesData=[]; }
+      const slidesJson=await callGemini(topic,"3~5개 핵심 슬라이드 JSON(title,points[]) 한국어",true);
+      try{slidesData=JSON.parse(slidesJson);}catch{slidesData=[];}
       renderSlides();
 
       // 퀴즈
-      const quizInstruction = "학습 주제에 대한 3문제의 객관식 퀴즈 JSON (question, options[], answerIndex)";
-      const quizJson = await callGemini(topic, quizInstruction, true);
-      try { quizData = JSON.parse(quizJson); } catch{ quizData=[]; }
+      const quizJson=await callGemini(topic,"3문제 객관식 퀴즈 JSON(question,options[],answerIndex)",true);
+      try{quizData=JSON.parse(quizJson);}catch{quizData=[];}
       renderQuiz();
 
       loadingOverlay.classList.add("hidden");
       mainAppScreen.classList.remove("hidden");
-      document.getElementById("app-title").textContent = `${topic} - Learn Your Way 🚀`;
     });
 
-    resetBtn.addEventListener("click", ()=>{
-      mainAppScreen.classList.add("hidden");
-      setupScreen.classList.remove("hidden");
-    });
+    resetBtn.addEventListener("click",()=>{mainAppScreen.classList.add("hidden");setupScreen.classList.remove("hidden");});
 
-    tabs.forEach(tab=>{
-      tab.addEventListener("click", ()=>{
-        tabs.forEach(t=>t.classList.remove("active"));
-        tab.classList.add("active");
-        document.querySelectorAll(".tab-content").forEach(c=>c.classList.add("hidden"));
-        document.getElementById(`${tab.dataset.tab}-content`).classList.remove("hidden");
-      });
-    });
+    tabs.forEach(tab=>{tab.addEventListener("click",()=>{tabs.forEach(t=>t.classList.remove("active"));tab.classList.add("active");document.querySelectorAll(".tab-content").forEach(c=>c.classList.add("hidden"));document.getElementById(`${tab.dataset.tab}-content`).classList.remove("hidden");});});
 
-    function renderSlides(){
-      if (!Array.isArray(slidesData) || slidesData.length===0){
-        slidesTab.innerHTML="<p>슬라이드를 생성하지 못했습니다.</p>"; return;
-      }
-      slidesTab.innerHTML = slidesData.map(s=>`
+    function renderSlides(){if(!slidesData.length){slidesTab.innerHTML="<p>슬라이드 없음</p>";return;}
+      slidesTab.innerHTML=slidesData.map((s,i)=>`
         <div class="p-4 bg-sky-50 rounded-lg mb-4">
           <h3 class="font-bold">${s.title||""}</h3>
-          <ul class="list-disc pl-6">${(s.points||[]).map(p=>`<li>${p}</li>`).join("")}</ul>
-        </div>`).join("");
-    }
+          <ul>${(s.points||[]).map(p=>`<li>${p}</li>`).join("")}</ul>
+          <button onclick="playAudio(${i})" class="mt-2 bg-blue-500 text-white px-3 py-1 rounded">🎵 듣기</button>
+        </div>`).join("");}
 
-    function renderQuiz(){
-      if (!Array.isArray(quizData) || quizData.length===0){
-        quizTab.innerHTML="<p>퀴즈를 생성하지 못했습니다.</p>"; return;
-      }
-      quizTab.innerHTML = quizData.map((q,i)=>`
+    function renderQuiz(){if(!quizData.length){quizTab.innerHTML="<p>퀴즈 없음</p>";return;}
+      quizTab.innerHTML=quizData.map((q,i)=>`
         <div class="mb-4">
           <p class="font-semibold">${i+1}. ${q.question}</p>
-          ${q.options.map((opt,j)=>`
-            <button class="quiz-option block w-full mt-1" data-index="${i}" data-opt="${j}">${opt}</button>`).join("")}
-        </div>`).join("")
-        + `<button id="submit-quiz" class="mt-4 bg-emerald-500 text-white px-4 py-2 rounded">채점하기</button>
-           <div id="quiz-result" class="mt-4"></div>`;
-
-      quizTab.querySelectorAll(".quiz-option").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          btn.parentElement.querySelectorAll(".quiz-option").forEach(b=>b.classList.remove("selected"));
-          btn.classList.add("selected");
-        });
-      });
-      quizTab.querySelector("#submit-quiz").addEventListener("click", gradeQuiz);
+          ${q.options.map((opt,j)=>`<button class="quiz-option block w-full mt-1" data-i="${i}" data-j="${j}">${opt}</button>`).join("")}
+        </div>`).join("")+`<button id="submit-quiz" class="bg-emerald-500 text-white px-4 py-2 mt-4">채점하기</button><div id="quiz-result"></div>`;
+      quizTab.querySelectorAll(".quiz-option").forEach(btn=>btn.addEventListener("click",()=>{btn.parentElement.querySelectorAll(".quiz-option").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");}));
+      quizTab.querySelector("#submit-quiz").addEventListener("click",gradeQuiz);
     }
 
-    function gradeQuiz(){
-      let score=0;
-      quizData.forEach((q,i)=>{
-        const chosen=document.querySelector(`.quiz-option.selected[data-index="${i}"]`);
-        if (!chosen) return;
-        if (parseInt(chosen.dataset.opt)===q.answerIndex){
-          score++;
-          chosen.classList.add("correct");
-        } else {
-          chosen.classList.add("incorrect");
-        }
-      });
-      document.getElementById("quiz-result").textContent=`점수: ${score}/${quizData.length}`;
-    }
+    function gradeQuiz(){let score=0;quizData.forEach((q,i)=>{const sel=document.querySelector(`.quiz-option.selected[data-i="${i}"]`);if(sel&&parseInt(sel.dataset.j)===q.answerIndex){score++;sel.classList.add("correct");}else if(sel){sel.classList.add("incorrect");}});document.getElementById("quiz-result").textContent=`점수:${score}/${quizData.length}`;}
+
+    // 🎵 간단한 오디오(TTS 흉내)
+    window.playAudio=(i)=>{alert(`(TTS) ${slidesData[i]?.title} 설명 오디오 재생`);}
+
   </script>
 </body>
 </html>
