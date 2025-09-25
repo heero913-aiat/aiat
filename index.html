@@ -368,69 +368,54 @@ async function callGemini(prompt, systemInstruction, isJson = false) {
         }
         
         startLearningBtn.addEventListener('click', async () => {
-            const topicValue = topicInput.value.trim();
-            if (!topicValue) {
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50';
-                modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center"><p class="text-lg font-medium">학습할 주제를 입력해주세요!</p><button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">확인</button></div>`;
-                document.body.appendChild(modal);
-                return;
-            }
+    const topicValue = topicInput.value.trim();
 
-            userProfile = {
-                grade: gradeLevelSelect.value,
-                interests: interestsInput.value || '다양한 분야',
-                topic: topicValue,
-                persona: voicePersonaSelect.value
-            };
-            preloadedAudios = []; 
+    if (!topicValue) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+                              <p class="text-lg font-medium">학습할 주제를 입력해주세요!</p>
+                              <button onclick="this.parentElement.parentElement.remove()" 
+                                      class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                                확인
+                              </button>
+                           </div>`;
+        document.body.appendChild(modal);
+        return;
+    }
 
-            setupScreen.classList.add('hidden');
-            loadingOverlay.classList.remove('hidden');
-            setTimeout(() => loadingOverlay.classList.remove('opacity-0'), 10);
+    userProfile = {
+        grade: gradeLevelSelect.value,
+        interests: interestsInput.value || '다양한 분야',
+        topic: topicValue,
+        persona: voicePersonaSelect.value
+    };
 
-            loadingMessage.textContent = `AI가 '${userProfile.topic}'에 대한 학습 자료를 준비 중입니다...`;
-            const baseTextSystemInstruction = `You are an expert curriculum developer for elementary school students. Create a concise, easy-to-understand educational text about the given topic. The text should cover the most important key points in a way that is engaging for a young audience. Respond in Korean.`;
-            const baseText = await callGemini(userProfile.topic, baseTextSystemInstruction);
+    // 🎵 오디오 초기화
+    preloadedAudios = []; 
 
-            loadingMessage.textContent = 'AI가 맞춤형 교과서를 작성 중입니다...';
-            personalizedText = await callGemini(
-                `학생 프로필: 학년 - ${userProfile.grade}, 관심사 - ${userProfile.interests}. 다음 원본 텍스트를 이 학생에 맞춰 개인화된 '몰입형 텍스트'로 재작성해주세요. 원본 텍스트: "${baseText}"`,
-                "당신은 학생의 학년과 관심사에 맞춰 교육 콘텐츠를 개인화하는 교육 전문가입니다. 제공된 텍스트를 학생이 이해하기 쉽고 흥미를 느낄만한 예시를 들어 재작성해주세요. 친절하고 격려하는 어조를 사용해주세요."
-            );
+    // ✅ 안전장치: 빈 값일 경우 기본 텍스트를 넣음
+    const promptText = userProfile.topic || "기본 학습 주제";
 
-            loadingMessage.textContent = '학습 내용을 슬라이드와 퀴즈로 변환 중입니다...';
-            const [sJson, qJson] = await Promise.all([
-                 callGemini(
-                    `다음 텍스트를 기반으로 4개의 슬라이드를 만들어 주세요: "${baseText}"`,
-                     "당신은 교육용 프레젠테이션 디자이너입니다. 제공된 텍스트를 바탕으로 핵심 내용만 요약하여 4개의 슬라이드를 만들어주세요. JSON 형식으로만 응답해야 합니다. 각 슬라이드는 'title'과 'points'(문자열 배열) 속성을 가져야 합니다.",
-                     true
-                 ),
-                 callGemini(
-                    `다음 텍스트를 기반으로 퀴즈 3개를 만들어 주세요: "${baseText}"`,
-                    "당신은 학습 내용을 평가하는 퀴즈 제작 전문가입니다. 텍스트를 기반으로 객관식 문제 3개를 만들어주세요. JSON 형식으로만 응답해야 하며, 최상위 객체는 'quiz' 배열을 포함해야 합니다. 각 퀴즈 객체는 'question', 'options'(4개 문자열 배열), 'answerIndex'(정답의 인덱스)를 포함해야 합니다.",
-                    true
-                 )
-            ]);
-            
-            try {
-                const parsedData = JSON.parse(sJson);
-                slidesData = Array.isArray(parsedData) ? parsedData : (parsedData.slides || []);
-            } catch(e) { console.error("슬라이드 JSON 파싱 오류:", e); slidesData = []; }
-            try {
-                const parsedQuiz = JSON.parse(qJson);
-                quizData = parsedQuiz.quiz || [];
-            } catch(e) { console.error("퀴즈 JSON 파싱 오류:", e); quizData = []; }
+    setupScreen.classList.add('hidden');
+    loadingOverlay.classList.remove('hidden');
+    setTimeout(() => loadingOverlay.classList.remove('opacity-0'), 10);
 
-            renderAllContent();
-            
-            loadingOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                loadingOverlay.classList.add('hidden');
-                mainAppScreen.classList.remove('hidden');
-                preloadAllNarrations();
-            }, 300);
-        });
+    loadingMessage.textContent = `AI가 '${userProfile.topic}'에 대한 학습 자료를 준비 중입니다...`;
+
+    const baseTextSystemInstruction = `You are an expert curriculum developer for elementary school students. 
+                                       Create a concise, easy-to-understand educational text about the given topic. 
+                                       The text should cover the most important key points in a way that is engaging 
+                                       for a young audience. Respond in Korean.`;
+
+    // 👇 이제 callGemini 호출
+    const baseText = await callGemini(promptText, baseTextSystemInstruction);
+
+    console.log("👉 Gemini API 응답:", baseText);
+
+    // 이후 코드(슬라이드, 퀴즈 생성 등)는 기존 파일 그대로 두세요 ✅
+});
+
 
         resetBtn.addEventListener('click', () => {
             stopNarration();
