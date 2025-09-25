@@ -3,7 +3,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -12,7 +12,12 @@ export default async function handler(req, res) {
     );
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: "API 요청 실패" });
+      const errorText = await response.text();
+      return res.status(response.status).json({
+        error: "API 요청 실패",
+        status: response.status,
+        details: errorText,
+      });
     }
 
     const data = await response.json();
