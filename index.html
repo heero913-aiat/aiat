@@ -1,181 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Your Way: AI 증강 교과서</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Gowun Dodum', sans-serif;
-            background-color: #f0f9ff;
-        }
-        .setup-card {
-            background-color: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05),
-                        0 8px 10px -6px rgb(0 0 0 / 0.05);
-            border: 1px solid #e0f2fe;
-            padding: 2.5rem;
-        }
-        .cute-input {
-            border-radius: 12px;
-            border-width: 2px;
-            border-color: #e5e7eb;
-            padding: 0.75rem 1rem;
-            transition: all 0.2s ease-in-out;
-        }
-        .cute-input:focus {
-            border-color: #fb7185;
-            box-shadow: 0 0 0 3px rgb(251 113 133 / 0.2);
-            outline: none;
-        }
-        .cute-button {
-            border-radius: 12px;
-            font-weight: 700;
-            padding: 0.75rem 1rem;
-            transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-                        0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .cute-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-                        0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        .tab-btn { border-bottom-width: 4px; border-color: transparent; color: #6b7280; transition: all 0.2s; }
-        .tab-btn.active { border-color: #38bdf8; color: #0c4a6e; font-weight: 700; }
-        .quiz-option { border-radius: 12px; border-width: 2px; }
-        .quiz-option:hover { border-color: #a5b4fc; background-color: #f0f9ff; }
-        .quiz-option.selected { border-color: #38bdf8; background-color: #7dd3fc; }
-        .quiz-option.correct { border-color: #34d399; background-color: #a7f3d0; }
-        .quiz-option.incorrect { border-color: #fb7185; background-color: #fecdd3; }
-        .prose { font-size: 1.125rem; line-height: 1.8; }
-    </style>
+  <meta charset="UTF-8">
+  <title>AI 교과서</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="text-slate-800">
+<body class="p-6">
+  <div id="setup">
+    <input id="topic-input" class="border p-2" placeholder="학습 주제 입력" />
+    <button id="start-btn" class="bg-blue-500 text-white px-4 py-2">나만의 교과서 만들기</button>
+  </div>
+  <div id="result" class="mt-6"></div>
 
-    <!-- 초기 설정 화면 -->
-    <div id="setup-screen" class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-lg setup-card">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-sky-800">Learn Your Way 🚀</h1>
-                <p class="mt-2 text-slate-500">AI와 함께 나만의 교과서를 만들어 보세요.</p>
-            </div>
-            <div class="mt-8 space-y-6">
-                <div>
-                    <label for="grade-level" class="block text-sm font-medium text-slate-700">학년</label>
-                    <select id="grade-level" class="mt-1 block w-full cute-input">
-                        <option value="초등학교 3학년" selected>초등학교 3학년</option>
-                        <option value="초등학교 4학년">초등학교 4학년</option>
-                        <option value="초등학교 5학년">초등학교 5학년</option>
-                        <option value="초등학교 6학년">초등학교 6학년</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="interests" class="block text-sm">관심사</label>
-                    <input type="text" id="interests" class="mt-1 block w-full cute-input" placeholder="예: 게임, 공룡">
-                </div>
-                <div>
-                    <label for="topic-input" class="block text-sm">학습 주제</label>
-                    <input type="text" id="topic-input" class="mt-1 block w-full cute-input" placeholder="예: 세종대왕">
-                </div>
-                <div>
-                    <label for="voice-persona" class="block text-sm">AI 페르소나</label>
-                    <select id="voice-persona" class="mt-1 block w-full cute-input">
-                        <option value="친절한 선생님">👩‍🏫 친절한 선생님</option>
-                        <option value="활기찬 아이돌">🎤 활기찬 아이돌</option>
-                        <option value="차분한 분석가">🧐 차분한 분석가</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mt-8">
-                <button id="start-learning-btn" class="w-full bg-sky-500 text-white cute-button text-lg">
-                    나만의 교과서 만들기
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 로딩 -->
-    <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0">
-        <p id="loading-message" class="text-white">AI가 자료를 준비 중입니다...</p>
-    </div>
-
-    <!-- 메인 -->
-    <div id="main-app-screen" class="hidden p-6">
-        <h1 id="app-title" class="text-3xl font-bold text-sky-800">Learn Your Way 🚀</h1>
-        <div id="immersive-text-content" class="prose mt-6"></div>
-    </div>
-
-    <script type="module">
-        const setupScreen = document.getElementById('setup-screen');
-        const mainAppScreen = document.getElementById('main-app-screen');
-        const startLearningBtn = document.getElementById('start-learning-btn');
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const loadingMessage = document.getElementById('loading-message');
-        const gradeLevelSelect = document.getElementById('grade-level');
-        const interestsInput = document.getElementById('interests');
-        const topicInput = document.getElementById('topic-input');
-        const voicePersonaSelect = document.getElementById('voice-persona');
-        const immersiveTextContainer = document.getElementById('immersive-text-content');
-
-        let userProfile = {};
-
-        // ✅ API 호출 함수 (중복/에러 제거된 버전)
-        async function callGemini(prompt, systemInstruction, isJson = false) {
-            const parts = [{ text: prompt }];
-            let payload = {
-                contents: [{ parts }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-            if (isJson) {
-                payload.generationConfig = { responseMimeType: "application/json" };
-            }
-            try {
-                const response = await fetch("/api/gemini", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                });
-                if (!response.ok) throw new Error("API 요청 실패: " + response.status);
-                const result = await response.json();
-                return result?.candidates?.[0]?.content?.parts?.[0]?.text || "응답 없음";
-            } catch (error) {
-                console.error("Gemini API 호출 중 오류:", error);
-                return isJson ? '{}' : `에러 발생: ${error.message}`;
-            }
-        }
-
-        // 버튼 이벤트
-        startLearningBtn.addEventListener('click', async () => {
-            const topicValue = topicInput.value.trim();
-            if (!topicValue) {
-                alert("학습 주제를 입력해주세요!");
-                return;
-            }
-
-            userProfile = {
-                grade: gradeLevelSelect.value,
-                interests: interestsInput.value || "다양한 분야",
-                topic: topicValue,
-                persona: voicePersonaSelect.value
-            };
-
-            setupScreen.classList.add('hidden');
-            loadingOverlay.classList.remove('hidden');
-            loadingMessage.textContent = `AI가 '${userProfile.topic}'에 대한 학습 자료를 준비 중입니다...`;
-
-            const baseTextSystemInstruction = "You are an expert curriculum developer for elementary school students. Respond in Korean.";
-            const baseText = await callGemini(userProfile.topic, baseTextSystemInstruction);
-
-            immersiveTextContainer.innerHTML = `<h2>${userProfile.topic}</h2><p>${baseText}</p>`;
-            loadingOverlay.classList.add('hidden');
-            mainAppScreen.classList.remove('hidden');
+  <script type="module">
+    async function callGemini(prompt, systemInstruction) {
+      const payload = {
+        contents: [{ parts: [{ text: prompt }] }],
+        systemInstruction: { parts: [{ text: systemInstruction }] }
+      };
+      try {
+        const response = await fetch("/api/gemini", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
-    </script>
+        if (!response.ok) throw new Error("API 요청 실패: " + response.status);
+        const result = await response.json();
+        return result?.candidates?.[0]?.content?.parts?.[0]?.text || "응답 없음";
+      } catch (err) {
+        return "에러: " + err.message;
+      }
+    }
+
+    document.getElementById("start-btn").addEventListener("click", async () => {
+      const topic = document.getElementById("topic-input").value.trim();
+      if (!topic) return alert("주제를 입력하세요!");
+
+      document.getElementById("result").textContent = "AI가 생성 중...";
+      const text = await callGemini(topic, "You are a tutor. 답변은 한국어로 해.");
+      document.getElementById("result").textContent = text;
+    });
+  </script>
 </body>
 </html>
