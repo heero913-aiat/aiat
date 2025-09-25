@@ -24,15 +24,21 @@ module.exports = async (req, res) => {
       },
     });
     
+    // 요청할 때 generationConfig를 올바른 구조로 포함합니다.
     const generationConfig = isJson ? { responseMimeType: "application/json" } : {};
+    
+    const result = await model.generateContent({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: generationConfig
+    });
 
-    const result = await model.generateContent(prompt, generationConfig);
     const response = await result.response;
     const text = response.text();
     
     res.status(200).json({ text });
   } catch (error) {
     console.error('Error calling Gemini API:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 };
+
