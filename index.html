@@ -9,137 +9,51 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
-        /* --- 기본 폰트 및 배경 설정 --- */
         body {
             font-family: 'Gowun Dodum', sans-serif;
-            background-color: #f0f9ff; /* Tailwind sky-50 */
+            background-color: #f0f9ff;
         }
-
-        /* --- 초기 설정 화면 카드 --- */
         .setup-card {
             background-color: white;
-            border-radius: 24px; /* rounded-3xl */
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
-            border: 1px solid #e0f2fe; /* sky-100 */
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05),
+                        0 8px 10px -6px rgb(0 0 0 / 0.05);
+            border: 1px solid #e0f2fe;
             padding: 2.5rem;
         }
-
-        /* --- 입력 필드 & 드롭다운 --- */
         .cute-input {
-            border-radius: 12px; /* rounded-xl */
+            border-radius: 12px;
             border-width: 2px;
-            border-color: #e5e7eb; /* gray-200 */
+            border-color: #e5e7eb;
             padding: 0.75rem 1rem;
             transition: all 0.2s ease-in-out;
         }
         .cute-input:focus {
-            border-color: #fb7185; /* rose-400 */
+            border-color: #fb7185;
             box-shadow: 0 0 0 3px rgb(251 113 133 / 0.2);
             outline: none;
         }
-
-        /* --- 버튼 --- */
         .cute-button {
-            border-radius: 12px; /* rounded-xl */
+            border-radius: 12px;
             font-weight: 700;
             padding: 0.75rem 1rem;
             transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+                        0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         .cute-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+                        0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        .cute-button:active {
-            transform: translateY(0px);
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        }
-
-        /* --- 탭 스타일 --- */
-        .tab-btn {
-            border-bottom-width: 4px;
-            border-color: transparent;
-            color: #6b7280; /* gray-500 */
-            transition: all 0.2s ease-in-out;
-        }
-        .tab-btn:hover {
-            background-color: #f0f9ff; /* sky-50 */
-            border-color: #bae6fd; /* sky-200 */
-        }
-        .tab-btn.active {
-            border-color: #38bdf8; /* sky-400 */
-            color: #0c4a6e; /* sky-800 */
-            font-weight: 700;
-        }
-
-        /* --- 퀴즈 옵션 --- */
-        .quiz-option {
-            border-radius: 12px;
-            border-width: 2px;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        }
-        .quiz-option:hover {
-            border-color: #a5b4fc; /* indigo-300 */
-            background-color: #f0f9ff; /* sky-50 */
-        }
-        .quiz-option.selected {
-            border-color: #38bdf8; /* sky-400 */
-            background-color: #7dd3fc; /* sky-300 */
-            color: #0c4a6e; /* sky-800 */
-            font-weight: 700;
-        }
-        .quiz-option.correct {
-            border-color: #34d399; /* emerald-400 */
-            background-color: #a7f3d0; /* emerald-200 */
-            color: #065f46; /* emerald-800 */
-        }
-        .quiz-option.incorrect {
-            border-color: #fb7185; /* rose-400 */
-            background-color: #fecdd3; /* rose-200 */
-            color: #9f1239; /* rose-800 */
-        }
-
-        /* --- 콘텐츠 텍스트 --- */
-        .prose {
-            font-size: 1.125rem;
-            line-height: 1.8;
-        }
-        .prose strong {
-            color: #0c4a6e; /* sky-800 */
-        }
-
-        /* --- 나머지 스타일 (기능 유지) --- */
-        .prose p { margin-bottom: 1rem; }
-        .slide-content { min-height: 300px; }
-        #loading-overlay { transition: opacity 0.3s ease-in-out; }
-        .narration-btn::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
-            margin-bottom: 8px;
-        }
-        .narration-btn:hover::after { opacity: 1; visibility: visible; }
-        .narration-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-        .narration-btn.ready svg { color: #3b82f6; }
-        #generate-image-btn { transform: translate(-50%, 5px); }
-        .illustration-wrapper .regenerate-btn {
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .illustration-wrapper:hover .regenerate-btn {
-            opacity: 1;
-        }
+        .tab-btn { border-bottom-width: 4px; border-color: transparent; color: #6b7280; transition: all 0.2s; }
+        .tab-btn.active { border-color: #38bdf8; color: #0c4a6e; font-weight: 700; }
+        .quiz-option { border-radius: 12px; border-width: 2px; }
+        .quiz-option:hover { border-color: #a5b4fc; background-color: #f0f9ff; }
+        .quiz-option.selected { border-color: #38bdf8; background-color: #7dd3fc; }
+        .quiz-option.correct { border-color: #34d399; background-color: #a7f3d0; }
+        .quiz-option.incorrect { border-color: #fb7185; background-color: #fecdd3; }
+        .prose { font-size: 1.125rem; line-height: 1.8; }
     </style>
 </head>
 <body class="text-slate-800">
@@ -153,26 +67,24 @@
             </div>
             <div class="mt-8 space-y-6">
                 <div>
-                    <label for="grade-level" class="block text-sm font-medium text-slate-700">학년을 선택해주세요.</label>
+                    <label for="grade-level" class="block text-sm font-medium text-slate-700">학년</label>
                     <select id="grade-level" class="mt-1 block w-full cute-input">
-                        <option value="초등학교 1학년">초등학교 1학년 (만 6-7세)</option>
-                        <option value="초등학교 2학년">초등학교 2학년 (만 7-8세)</option>
-                        <option value="초등학교 3학년" selected>초등학교 3학년 (만 8-9세)</option>
-                        <option value="초등학교 4학년">초등학교 4학년 (만 9-10세)</option>
-                        <option value="초등학교 5학년">초등학교 5학년 (만 10-11세)</option>
-                        <option value="초등학교 6학년">초등학교 6학년 (만 11-12세)</option>
+                        <option value="초등학교 3학년" selected>초등학교 3학년</option>
+                        <option value="초등학교 4학년">초등학교 4학년</option>
+                        <option value="초등학교 5학년">초등학교 5학년</option>
+                        <option value="초등학교 6학년">초등학교 6학년</option>
                     </select>
                 </div>
                 <div>
-                    <label for="interests" class="block text-sm font-medium text-slate-700">학생의 관심사를 알려주세요. (쉼표로 구분)</label>
-                    <input type="text" id="interests" class="mt-1 block w-full cute-input" placeholder="예: 게임, K-POP, 공룡">
-                </div>
-                 <div>
-                    <label for="topic-input" class="block text-sm font-medium text-slate-700">오늘 학습할 주제를 입력해주세요.</label>
-                    <input type="text" id="topic-input" class="mt-1 block w-full cute-input" placeholder="예: 세종대왕, 지구 온난화, 분수의 나눗셈">
+                    <label for="interests" class="block text-sm">관심사</label>
+                    <input type="text" id="interests" class="mt-1 block w-full cute-input" placeholder="예: 게임, 공룡">
                 </div>
                 <div>
-                    <label for="voice-persona" class="block text-sm font-medium text-slate-700">AI 내레이터 페르소나를 선택하세요.</label>
+                    <label for="topic-input" class="block text-sm">학습 주제</label>
+                    <input type="text" id="topic-input" class="mt-1 block w-full cute-input" placeholder="예: 세종대왕">
+                </div>
+                <div>
+                    <label for="voice-persona" class="block text-sm">AI 페르소나</label>
                     <select id="voice-persona" class="mt-1 block w-full cute-input">
                         <option value="친절한 선생님">👩‍🏫 친절한 선생님</option>
                         <option value="활기찬 아이돌">🎤 활기찬 아이돌</option>
@@ -181,646 +93,89 @@
                 </div>
             </div>
             <div class="mt-8">
-                <button id="start-learning-btn" class="w-full bg-sky-500 hover:bg-sky-600 text-white cute-button text-lg">
+                <button id="start-learning-btn" class="w-full bg-sky-500 text-white cute-button text-lg">
                     나만의 교과서 만들기
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- 로딩 오버레이 -->
+    <!-- 로딩 -->
     <div id="loading-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0">
-        <div class="text-center text-white">
-            <svg class="animate-spin h-10 w-10 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p id="loading-message" class="mt-4 text-lg">AI가 맞춤형 학습 자료를 생성 중입니다...</p>
-        </div>
+        <p id="loading-message" class="text-white">AI가 자료를 준비 중입니다...</p>
     </div>
-    
-    <!-- 메인 학습 화면 -->
-    <div id="main-app-screen" class="hidden relative w-full max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
-        <header class="mb-6 flex justify-between items-center">
-            <h1 id="app-title" class="text-4xl font-bold text-sky-800">Learn Your Way 🚀</h1>
-            <div class="flex items-center space-x-4">
-                 <div id="preload-status" class="text-sm text-gray-500 hidden items-center space-x-2">
-                    <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                    <span>내레이션 준비 중...</span>
-                    <span id="preload-progress-text" class="font-medium"></span>
-                </div>
-                <button id="reset-btn" class="bg-slate-200 text-slate-700 hover:bg-slate-300 cute-button text-sm py-2 px-4">
-                    처음으로
-                </button>
-            </div>
-        </header>
 
-        <div class="bg-white rounded-2xl shadow-lg">
-            <!-- 탭 네비게이션 -->
-            <div class="border-b border-slate-200">
-                <nav class="-mb-px flex justify-around" aria-label="Tabs">
-                    <button class="tab-btn active whitespace-nowrap py-4 px-1 font-bold text-sm" data-tab="immersive-text">
-                        📖 몰입형 텍스트
-                    </button>
-                    <button class="tab-btn whitespace-nowrap py-4 px-1 font-bold text-sm" data-tab="slides">
-                        🖥️ 핵심 슬라이드
-                    </button>
-                    <button class="tab-btn whitespace-nowrap py-4 px-1 font-bold text-sm" data-tab="quiz">
-                        ❓ 형성 퀴즈
-                    </button>
-                </nav>
-            </div>
-
-            <!-- 탭 콘텐츠 -->
-            <div class="p-6 sm:p-8">
-                <div id="immersive-text-content" class="tab-content prose max-w-none"></div>
-                <div id="slides-content" class="tab-content hidden"></div>
-                <div id="quiz-content" class="tab-content hidden"></div>
-            </div>
-        </div>
-        <button id="generate-image-btn" class="hidden absolute z-10 bg-sky-500 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-sky-600 focus:outline-none transition cute-button">
-            ✨ 관련 그림 생성
-        </button>
+    <!-- 메인 -->
+    <div id="main-app-screen" class="hidden p-6">
+        <h1 id="app-title" class="text-3xl font-bold text-sky-800">Learn Your Way 🚀</h1>
+        <div id="immersive-text-content" class="prose mt-6"></div>
     </div>
 
     <script type="module">
-        // DOM 요소 가져오기
         const setupScreen = document.getElementById('setup-screen');
         const mainAppScreen = document.getElementById('main-app-screen');
+        const startLearningBtn = document.getElementById('start-learning-btn');
         const loadingOverlay = document.getElementById('loading-overlay');
         const loadingMessage = document.getElementById('loading-message');
-        const preloadStatus = document.getElementById('preload-status');
-        const preloadProgressText = document.getElementById('preload-progress-text');
-        
-        const startLearningBtn = document.getElementById('start-learning-btn');
-        const resetBtn = document.getElementById('reset-btn');
-        
         const gradeLevelSelect = document.getElementById('grade-level');
         const interestsInput = document.getElementById('interests');
         const topicInput = document.getElementById('topic-input');
         const voicePersonaSelect = document.getElementById('voice-persona');
-        const generateImageBtn = document.getElementById('generate-image-btn');
         const immersiveTextContainer = document.getElementById('immersive-text-content');
-        
-        const tabs = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
 
         let userProfile = {};
-        let personalizedText = "";
-        let slidesData = [];
-        let quizData = [];
-        let preloadedAudios = [];
-        let currentSelection = null;
 
-        // API 호출 함수
-async function callGemini(prompt, systemInstruction, isJson = false) {
-  const parts = [{ text: prompt }];
-
-  let payload = {
-    contents: [{ parts: parts }],
-    systemInstruction: { parts: [{ text: systemInstruction }] }
-  };
-
-  if (isJson) {
-    payload.generationConfig = { responseMimeType: "application/json" };
-  }
-
-  try {
-    const response = await fetch("/api/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) throw new Error("API 요청 실패: " + response.status);
-    const result = await response.json();
-    return result?.candidates?.[0]?.content?.parts?.[0]?.text || "응답 없음";
-  } catch (error) {
-    console.error(error);
-    return "에러 발생: " + error.message;
-  }
-}
-
-                
-                if (!response.ok) throw new Error(`API 요청 재시도 후에도 실패: ${response.status}`);
-
-                const result = await response.json();
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
-                    console.error("API 응답이 비어있거나 잘못된 형식입니다.", result);
-                    return isJson ? '{}' : '콘텐츠 생성에 실패했습니다.';
-                }
-            } catch (error) {
-                console.error('Gemini API 호출 중 오류 발생:', error);
-                return isJson ? '{}' : `오류가 발생했습니다: ${error.message}`;
-            }
-        }
-        
-        async function generateImage(prompt) {
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-            const payload = { 
-                instances: [{ prompt: prompt }],
-                parameters: { "sampleCount": 1 } 
+        // ✅ API 호출 함수 (중복/에러 제거된 버전)
+        async function callGemini(prompt, systemInstruction, isJson = false) {
+            const parts = [{ text: prompt }];
+            let payload = {
+                contents: [{ parts }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
             };
+            if (isJson) {
+                payload.generationConfig = { responseMimeType: "application/json" };
+            }
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                const response = await fetch("/api/gemini", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
                 });
-                if (!response.ok) throw new Error(`Image API failed: ${response.status}`);
+                if (!response.ok) throw new Error("API 요청 실패: " + response.status);
                 const result = await response.json();
-                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                    return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                }
-                throw new Error("Invalid image data from API.");
+                return result?.candidates?.[0]?.content?.parts?.[0]?.text || "응답 없음";
             } catch (error) {
-                console.error('Error generating image:', error);
-                return null;
+                console.error("Gemini API 호출 중 오류:", error);
+                return isJson ? '{}' : `에러 발생: ${error.message}`;
             }
         }
 
-        async function generateMotivationalImage(concept, userInterests) {
-            const artDirectorSystemInstruction = `You are a creative art director for an educational app for elementary school students. Your task is to create a highly specific and imaginative image prompt. The primary goal is to create an illustration that CLEARLY EXPLAINS the educational concept. Secondarily, you can subtly incorporate the user's interests as a creative theme to make it more engaging, but the interest must not overshadow or distract from the educational purpose. The final image must be purely visual and contain absolutely no text, letters, or numbers.
-
-            1.  **Prioritize Education:** Create a scene that visually represents the core educational concept.
-            2.  **Subtly Add Interest:** Weave in a small element or theme from the user's interest (e.g., if the concept is 'photosynthesis' and interest is 'dinosaurs', you could show a prehistoric plant performing photosynthesis, but the focus is on the plant's process, not just the dinosaur).
-            3.  **Define Style:** Choose a clear, simple, and engaging art style suitable for children (e.g., 'vibrant simple cartoon', 'cute storybook illustration').
-            4.  **Describe the Scene:** Write a detailed description for the AI artist.
-            5.  **Strictly Enforce "No Text":** End the prompt with a strong command to exclude all text, letters, and numbers.
-
-            Respond with only the final, detailed image prompt.`;
-            const artDirectorPrompt = `Educational Concept: "${concept}"\nUser Interests: "${userInterests}"`;
-            
-            const finalImagePrompt = await callGemini(artDirectorPrompt, artDirectorSystemInstruction);
-            const imageUrl = await generateImage(finalImagePrompt);
-
-            if (imageUrl) {
-                return imageUrl;
-            } else {
-                console.warn("Failed to generate a motivational image.");
-                return "https://placehold.co/600x400/E2E8F0/4A5568?text=Illustration+Failed";
-            }
-        }
-        
+        // 버튼 이벤트
         startLearningBtn.addEventListener('click', async () => {
-    const topicValue = topicInput.value.trim();
-
-    if (!topicValue) {
-        const modal = document.createElement('div');
-        modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50';
-        modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
-                              <p class="text-lg font-medium">학습할 주제를 입력해주세요!</p>
-                              <button onclick="this.parentElement.parentElement.remove()" 
-                                      class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
-                                확인
-                              </button>
-                           </div>`;
-        document.body.appendChild(modal);
-        return;
-    }
-
-    userProfile = {
-        grade: gradeLevelSelect.value,
-        interests: interestsInput.value || '다양한 분야',
-        topic: topicValue,
-        persona: voicePersonaSelect.value
-    };
-
-    // 🎵 오디오 초기화
-    preloadedAudios = []; 
-
-    // ✅ 안전장치: 빈 값일 경우 기본 텍스트를 넣음
-    const promptText = userProfile.topic || "기본 학습 주제";
-
-    setupScreen.classList.add('hidden');
-    loadingOverlay.classList.remove('hidden');
-    setTimeout(() => loadingOverlay.classList.remove('opacity-0'), 10);
-
-    loadingMessage.textContent = `AI가 '${userProfile.topic}'에 대한 학습 자료를 준비 중입니다...`;
-
-    const baseTextSystemInstruction = `You are an expert curriculum developer for elementary school students. 
-                                       Create a concise, easy-to-understand educational text about the given topic. 
-                                       The text should cover the most important key points in a way that is engaging 
-                                       for a young audience. Respond in Korean.`;
-
-    // 👇 이제 callGemini 호출
-    const baseText = await callGemini(promptText, baseTextSystemInstruction);
-
-    console.log("👉 Gemini API 응답:", baseText);
-
-    // 이후 코드(슬라이드, 퀴즈 생성 등)는 기존 파일 그대로 두세요 ✅
-});
-
-
-        resetBtn.addEventListener('click', () => {
-            stopNarration();
-            mainAppScreen.classList.add('hidden');
-            setupScreen.classList.remove('hidden');
-            topicInput.value = "";
-            interestsInput.value = "";
-        });
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                stopNarration();
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                tabContents.forEach(content => content.classList.add('hidden'));
-                document.getElementById(`${tab.dataset.tab}-content`).classList.remove('hidden');
-            });
-        });
-        
-        function renderAllContent() {
-            document.getElementById('app-title').textContent = `${userProfile.topic} - Learn Your Way 🚀`;
-            renderImmersiveText();
-            renderSlides();
-            renderQuiz();
-            tabs.forEach(t=>t.classList.remove('active'));
-            document.querySelector('.tab-btn[data-tab="immersive-text"]').classList.add('active');
-        }
-
-        function renderImmersiveText() {
-            const container = document.getElementById('immersive-text-content');
-            const htmlContent = personalizedText.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>`).join('');
-
-            container.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4">${userProfile.topic} 완전 정복하기!</h2>
-                <div class="text-base leading-relaxed">${htmlContent}</div>`;
-        }
-        
-        document.addEventListener('mouseup', (event) => {
-            if (generateImageBtn.contains(event.target)) return;
-            const selection = window.getSelection();
-            const selectedText = selection.toString().trim();
-
-            if (selectedText.length > 5 && immersiveTextContainer.contains(selection.anchorNode)) {
-                currentSelection = {
-                    text: selectedText,
-                    range: selection.getRangeAt(0)
-                };
-                const rect = currentSelection.range.getBoundingClientRect();
-                const containerRect = mainAppScreen.getBoundingClientRect();
-                
-                generateImageBtn.style.top = `${rect.bottom - containerRect.top + 5}px`;
-                generateImageBtn.style.left = `${rect.left + rect.width / 2 - containerRect.left}px`;
-                generateImageBtn.classList.remove('hidden');
-            } else {
-                generateImageBtn.classList.add('hidden');
-                currentSelection = null;
-            }
-        });
-
-        generateImageBtn.addEventListener('click', async () => {
-            if (!currentSelection) return;
-            const { text, range } = currentSelection;
-            generateImageBtn.classList.add('hidden');
-            let parentPara = range.endContainer;
-            while(parentPara && parentPara.tagName !== 'P') {
-                parentPara = parentPara.parentNode;
-            }
-            if (!parentPara || !immersiveTextContainer.contains(parentPara)) {
-                 parentPara = immersiveTextContainer.querySelector('.leading-relaxed p:last-of-type');
+            const topicValue = topicInput.value.trim();
+            if (!topicValue) {
+                alert("학습 주제를 입력해주세요!");
+                return;
             }
 
-            const loader = document.createElement('div');
-            loader.className = 'my-6 p-4 bg-gray-100 rounded-lg flex items-center justify-center';
-            loader.innerHTML = `<div class="text-center"><svg class="animate-spin h-8 w-8 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-sm font-medium text-gray-600 mt-2">AI가 삽화를 그리는 중...</p></div>`;
-            parentPara.parentNode.insertBefore(loader, parentPara.nextSibling);
-
-            window.getSelection().removeAllRanges();
-            currentSelection = null;
-            const imageUrl = await generateMotivationalImage(text, userProfile.interests);
-            
-            const newIllustrationWrapper = document.createElement('div');
-            newIllustrationWrapper.className = 'my-6 relative illustration-wrapper';
-
-            const imgElement = document.createElement('img');
-            imgElement.src = imageUrl;
-            imgElement.alt = `AI generated illustration for ${text}`;
-            imgElement.className = 'mx-auto rounded-lg shadow-md max-w-md w-full';
-
-            const regenButton = document.createElement('button');
-            regenButton.className = 'regenerate-btn absolute top-2 right-2 bg-white bg-opacity-80 text-gray-700 text-xs font-semibold py-1 px-3 rounded-full shadow hover:bg-opacity-100 transition cute-button';
-            regenButton.innerHTML = `다른 그림 보기 🔄`;
-            regenButton.onclick = () => regenerateIllustration(newIllustrationWrapper, text);
-
-            newIllustrationWrapper.appendChild(imgElement);
-            newIllustrationWrapper.appendChild(regenButton);
-
-            loader.replaceWith(newIllustrationWrapper);
-        });
-
-        async function regenerateIllustration(wrapperElement, concept) {
-            if (!wrapperElement) return;
-
-            const loader = document.createElement('div');
-            loader.className = 'absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg';
-            loader.innerHTML = `<div class="text-center"><svg class="animate-spin h-8 w-8 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-sm font-medium text-gray-600 mt-2">새로운 삽화를 구상 중...</p></div>`;
-            wrapperElement.appendChild(loader);
-
-            const newImageUrl = await generateMotivationalImage(concept, userProfile.interests);
-
-            if (newImageUrl && !newImageUrl.includes('placehold.co')) {
-                const imgElement = wrapperElement.querySelector('img');
-                if (imgElement) {
-                    imgElement.src = newImageUrl;
-                }
-            } else {
-                alert("삽화 교체에 실패했어요. 잠시 후 다시 시도해주세요.");
-            }
-            
-            wrapperElement.removeChild(loader);
-        }
-
-        let currentNarrationButton = null;
-        let currentAudio = null;
-        function stopNarration() {
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio = null;
-            }
-            if(currentNarrationButton) {
-                currentNarrationButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
-                currentNarrationButton.classList.remove('animate-pulse');
-                currentNarrationButton.dataset.tooltip = "내레이션 듣기";
-                currentNarrationButton = null;
-            }
-        }
-        
-        function base64ToArrayBuffer(base64) {
-            const binaryString = window.atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
-            return bytes.buffer;
-        }
-
-        function pcmToWav(pcmData, sampleRate) {
-            const pcm16 = new Int16Array(pcmData);
-            const buffer = new ArrayBuffer(44 + pcm16.length * 2);
-            const view = new DataView(buffer);
-            const writeString = (view, offset, string) => {
-                for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
+            userProfile = {
+                grade: gradeLevelSelect.value,
+                interests: interestsInput.value || "다양한 분야",
+                topic: topicValue,
+                persona: voicePersonaSelect.value
             };
-            writeString(view, 0, 'RIFF');
-            view.setUint32(4, 36 + pcm16.length * 2, true);
-            writeString(view, 8, 'WAVE');
-            writeString(view, 12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true);
-            view.setUint16(22, 1, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true);
-            view.setUint16(32, 2, true);
-            view.setUint16(34, 16, true);
-            writeString(view, 36, 'data');
-            view.setUint32(40, pcm16.length * 2, true);
-            for (let i = 0; i < pcm16.length; i++) view.setInt16(44 + i * 2, pcm16[i], true);
-            return new Blob([view], { type: 'audio/wav' });
-        }
-        
-        async function generateAudio(script, persona) {
-            let voiceName = "Zephyr";
-            switch(persona) {
-                case '활기찬 아이돌': voiceName = 'Puck'; break;
-                case '차분한 분석가': voiceName = 'Charon'; break;
-            }
 
-            try {
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
-                const payload = { 
-                    contents: [{ parts: [{ text: script }] }],
-                    generationConfig: { 
-                        responseModalities: ["AUDIO"],
-                        speechConfig: {
-                            voiceConfig: {
-                                prebuiltVoiceConfig: { voiceName: voiceName }
-                            }
-                        }
-                    }
-                };
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error(`TTS API failed: ${response.status}`);
+            setupScreen.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingMessage.textContent = `AI가 '${userProfile.topic}'에 대한 학습 자료를 준비 중입니다...`;
 
-                const result = await response.json();
-                const audioData = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-                const mimeType = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.mimeType;
+            const baseTextSystemInstruction = "You are an expert curriculum developer for elementary school students. Respond in Korean.";
+            const baseText = await callGemini(userProfile.topic, baseTextSystemInstruction);
 
-                if (!audioData || !mimeType) throw new Error("Invalid audio data from API.");
-                
-                const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
-                const pcmData = base64ToArrayBuffer(audioData);
-                const wavBlob = pcmToWav(pcmData, sampleRate);
-                return URL.createObjectURL(wavBlob);
-            } catch (error) {
-                console.error('Error generating audio:', error);
-                return null;
-            }
-        }
-        
-        async function preloadAllNarrations() {
-            if (slidesData.length === 0) return;
-            preloadStatus.classList.remove('hidden');
-            preloadedAudios = new Array(slidesData.length).fill(null);
-
-            const baseSystemInstruction = `주어진 페르소나에 몰입하여 교육 콘텐츠를 설명하는 AI 성우입니다. 당신은 여러 슬라이드로 구성된 수업을 진행하고 있습니다. 각 슬라이드의 위치(처음, 중간, 마지막)에 맞는 자연스러운 대본을 작성해주세요. 응답은 최종 대본 텍스트만 포함해야 합니다.`;
-            
-            for (let i = 0; i < slidesData.length; i++) {
-                preloadProgressText.textContent = `(${i + 1}/${slidesData.length})`;
-                const slide = slidesData[i];
-                const slideText = `${slide.title}. ${(slide.points || []).join('. ')}`;
-                
-                let positionInstruction = '';
-                if (i === 0) {
-                    positionInstruction = `이것은 첫 번째 슬라이드입니다. 페르소나에 맞는 창의적인 도입 인사로 수업을 시작한 뒤, 자연스럽게 슬라이드 내용을 설명해주세요.`;
-                } else if (i === slidesData.length - 1) {
-                    positionInstruction = `이것은 마지막 슬라이드입니다. 슬라이드 내용을 설명한 뒤, 페르소나에 맞는 멋진 마무리 인사로 수업을 끝내주세요.`;
-                } else {
-                    positionInstruction = `이것은 중간 슬라이드입니다. 이전 내용에 이어서, 별도의 인사 없이 바로 슬라이드 내용을 자연스럽게 설명해주세요.`;
-                }
-
-                const prompt = `현재 페르소나: '${userProfile.persona}'.\n상황: ${positionInstruction}\n슬라이드 내용: "${slideText}"`;
-                
-                const script = await callGemini(prompt, baseSystemInstruction);
-                const audioUrl = await generateAudio(script, userProfile.persona);
-                preloadedAudios[i] = audioUrl;
-                
-                const slideBtn = document.querySelector(`.narration-btn[data-slide-index='${i}']`);
-                if(slideBtn) {
-                   slideBtn.disabled = false;
-                   slideBtn.classList.add('ready');
-                   slideBtn.dataset.tooltip = '내레이션 듣기';
-                }
-            }
-            preloadStatus.classList.add('hidden');
-        }
-
-        async function playNarration(slideIndex, buttonElement) {
-            if (currentNarrationButton === buttonElement) { stopNarration(); return; }
-            stopNarration();
-            currentNarrationButton = buttonElement;
-
-            if (preloadedAudios[slideIndex]) { // 오디오가 사전 로딩된 경우
-                currentAudio = new Audio(preloadedAudios[slideIndex]);
-                currentAudio.onended = stopNarration;
-                currentAudio.play();
-                buttonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
-                buttonElement.classList.add('animate-pulse');
-                buttonElement.dataset.tooltip = "재생 중지";
-            } else { 
-                alert('내레이션이 아직 준비되지 않았습니다. 잠시 후 다시 시도해주세요.');
-                stopNarration();
-            }
-        }
-
-        function renderSlides() {
-            const container = document.getElementById('slides-content');
-            if (slidesData.length === 0) {
-                container.innerHTML = `<p>슬라이드를 생성하지 못했습니다. 다시 시도해주세요.</p>`;
-                return;
-            }
-
-            let slidesHtml = slidesData.map((slide, index) => `
-                <div class="slide ${index === 0 ? '' : 'hidden'}">
-                    <div class="relative bg-sky-50/70 p-6 rounded-lg shadow-inner slide-content flex flex-col justify-center">
-                        <button onclick="playNarration(${index}, this)" data-slide-index="${index}" data-tooltip="내레이션 준비 중..." class="narration-btn absolute top-4 right-4 p-2 rounded-full text-gray-500 hover:text-blue-600 transition" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                        </button>
-                        <h3 class="text-xl font-bold text-center text-sky-800 mb-4">${slide.title || '제목 없음'}</h3>
-                        <ul class="list-disc pl-6 space-y-2">
-                            ${(slide.points || []).map(point => `<li class="text-slate-700">${point}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `).join('');
-
-            container.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4 text-center">핵심 요약 슬라이드</h2>
-                ${slidesHtml}
-                <div class="flex justify-between items-center mt-4">
-                    <button id="prev-slide" class="bg-slate-300 text-slate-800 cute-button py-2 px-4">&lt; 이전</button>
-                    <span id="slide-counter" class="text-sm font-medium text-slate-600">1 / ${slidesData.length}</span>
-                    <button id="next-slide" class="bg-sky-500 text-white cute-button py-2 px-4">다음 &gt;</button>
-                </div>
-            `;
-
-            let currentSlide = 0;
-            const slideElements = container.querySelectorAll('.slide');
-            const prevBtn = document.getElementById('prev-slide');
-            const nextBtn = document.getElementById('next-slide');
-            const counter = document.getElementById('slide-counter');
-
-            function updateSlides() {
-                slideElements.forEach((slide, index) => slide.classList.toggle('hidden', index !== currentSlide));
-                counter.textContent = `${currentSlide + 1} / ${slidesData.length}`;
-                prevBtn.disabled = currentSlide === 0;
-                prevBtn.classList.toggle('opacity-50', currentSlide === 0);
-                nextBtn.disabled = currentSlide === slidesData.length - 1;
-                nextBtn.classList.toggle('opacity-50', currentSlide === slidesData.length - 1);
-            }
-
-            prevBtn.addEventListener('click', () => { stopNarration(); if (currentSlide > 0) { currentSlide--; updateSlides(); } });
-            nextBtn.addEventListener('click', () => { stopNarration(); if (currentSlide < slidesData.length - 1) { currentSlide++; updateSlides(); } });
-            updateSlides();
-        }
-
-        // 퀴즈 렌더링
-        function renderQuiz() {
-            const container = document.getElementById('quiz-content');
-            if (quizData.length === 0) { container.innerHTML = `<p>퀴즈를 생성하지 못했습니다.</p>`; return; }
-            let quizHtml = `<h2 class="text-2xl font-bold mb-4 text-center">개념 확인 퀴즈</h2><div id="quiz-questions">${quizData.map((q, index) => `<div class="mb-6 quiz-item" data-question-index="${index}" data-correct-answer="${q.answerIndex}"><p class="font-semibold mb-3 text-lg">${index + 1}. ${q.question}</p><div class="space-y-2">${q.options.map((opt, optIndex) => `<button class="quiz-option w-full text-left p-3 border-gray-300 bg-white" data-option-index="${optIndex}">${opt}</button>`).join('')}</div></div>`).join('')}</div><div class="text-center mt-6"><button id="submit-quiz-btn" class="bg-emerald-500 hover:bg-emerald-600 text-white cute-button text-lg px-8">채점하기</button></div><div id="quiz-result" class="hidden mt-8"></div>`;
-            container.innerHTML = quizHtml;
-            container.querySelector('#quiz-questions').addEventListener('click', (e) => {
-                if (e.target.classList.contains('quiz-option')) {
-                    e.target.parentElement.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('selected'));
-                    e.target.classList.add('selected');
-                }
-            });
-            document.getElementById('submit-quiz-btn').addEventListener('click', gradeQuiz);
-        }
-
-        async function gradeQuiz() {
-            const quizItems = document.querySelectorAll('.quiz-item');
-            let score = 0;
-            const incorrectAnswers = [];
-
-            if (Array.from(quizItems).some(item => !item.querySelector('.quiz-option.selected'))) {
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50';
-                modal.innerHTML = `<div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center"><p class="text-lg font-medium">모든 문제에 답해주세요!</p><button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">확인</button></div>`;
-                document.body.appendChild(modal);
-                return;
-            }
-
-            quizItems.forEach(item => {
-                const selectedOption = item.querySelector('.quiz-option.selected');
-                const questionIndex = parseInt(item.dataset.questionIndex);
-                const correctAnswerIndex = parseInt(item.dataset.correctAnswer);
-                const selectedAnswerIndex = parseInt(selectedOption.dataset.optionIndex);
-                
-                item.querySelectorAll('.quiz-option').forEach(opt => opt.disabled = true);
-                
-                if (selectedAnswerIndex === correctAnswerIndex) {
-                    score++;
-                    selectedOption.classList.add('correct');
-                } else {
-                    selectedOption.classList.add('incorrect');
-                    item.querySelectorAll('.quiz-option')[correctAnswerIndex].classList.add('correct');
-                    incorrectAnswers.push({
-                        question: quizData[questionIndex].question,
-                        correctAnswer: quizData[questionIndex].options[correctAnswerIndex],
-                        userAnswer: selectedOption.textContent
-                    });
-                }
-            });
-
-            document.getElementById('submit-quiz-btn').classList.add('hidden');
-            const resultContainer = document.getElementById('quiz-result');
-            resultContainer.classList.remove('hidden');
-            resultContainer.innerHTML = '<p class="text-center">AI 튜터가 맞춤 해설을 만들고 있어요...</p>';
-            
-            let feedbackHtml = '';
-            if (incorrectAnswers.length > 0) {
-                const feedbackSystemInstruction = `You are a kind and encouraging AI tutor for elementary school students. Your task is to explain why their quiz answers were incorrect. For each question, explain in simple Korean why the correct answer is right. Be positive and supportive. Structure your response with a clear heading for each question's explanation.`;
-                const feedbackPrompt = `An elementary school student answered the following questions incorrectly. Please provide a simple, encouraging explanation for each one.\n\n` +
-                    incorrectAnswers.map((item, index) => 
-                        `틀린 문제 ${index + 1}:\n` +
-                        `- 질문: ${item.question}\n` +
-                        `- 정답: ${item.correctAnswer}\n` +
-                        `- 학생의 답변: ${item.userAnswer}`
-                    ).join('\n\n');
-
-                const detailedFeedback = await callGemini(feedbackPrompt, feedbackSystemInstruction);
-                feedbackHtml = `<div class="mt-4 p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
-                                  <h4 class="font-bold text-amber-800">🌱 다시 한번 살펴봐요!</h4>
-                                  <div class="mt-2 text-sm text-amber-700 space-y-4">${detailedFeedback.replace(/\n\n/g, '<hr class="my-2 border-amber-200">').replace(/\n/g, '<br>')}</div>
-                                </div>`;
-            }
-
-            const glowSystemInstruction = "An elementary school student just took a quiz. Based on their score, provide a short, positive, and encouraging 'Glows' (strengths) feedback in one sentence. Respond in Korean.";
-            const glowPrompt = `The student scored ${score} out of ${quizData.length} on the topic of '${userProfile.topic}'.`;
-            const glowText = await callGemini(glowPrompt, glowSystemInstruction);
-            
-            const resultHeaderHtml = `<div class="bg-slate-50 p-6 rounded-2xl">
-                                        <h3 class="text-xl font-bold text-center">퀴즈 결과</h3>
-                                        <p class="text-5xl font-bold text-center my-4 text-sky-600">${score} / ${quizData.length}</p>
-                                        <div class="bg-emerald-50 p-4 rounded-xl border-2 border-emerald-200">
-                                            <h4 class="font-bold text-emerald-800">🌟 잘했어요! (Glows)</h4>
-                                            <p class="mt-2 text-sm text-emerald-700">${glowText}</p>
-                                        </div>
-                                        ${feedbackHtml}
-                                      </div>`;
-
-            resultContainer.innerHTML = resultHeaderHtml;
-        }
-
+            immersiveTextContainer.innerHTML = `<h2>${userProfile.topic}</h2><p>${baseText}</p>`;
+            loadingOverlay.classList.add('hidden');
+            mainAppScreen.classList.remove('hidden');
+        });
     </script>
 </body>
 </html>
-
