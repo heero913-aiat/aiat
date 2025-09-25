@@ -1,12 +1,23 @@
 // /api/gemini.js
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Vercel 환경 변수에서 API 키를 가져옵니다.
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const apiKey = process.env.GOOGLE_API_KEY;
 
-module.exports = async (req, res) => {
+let genAI;
+if (apiKey) {
+  genAI = new GoogleGenerativeAI(apiKey);
+}
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+  
+  // API 키가 설정되었는지 확인
+  if (!apiKey || !genAI) {
+    console.error('GOOGLE_API_KEY is not set in Vercel environment variables.');
+    return res.status(500).json({ error: 'Server configuration error: API key is missing.' });
   }
 
   try {
@@ -16,7 +27,6 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    // JSON 응답이 필요할 경우, 모델 설정에 generationConfig를 포함합니다.
     const generationConfig = isJson ? { responseMimeType: "application/json" } : {};
 
     const model = genAI.getGenerativeModel({
@@ -25,12 +35,10 @@ module.exports = async (req, res) => {
         parts: [{ text: systemInstruction || '' }],
         role: "model"
       },
-      generationConfig: generationConfig // 수정된 위치
+      generationConfig: generationConfig
     });
     
-    // generateContent에는 프롬프트만 직접 전달합니다.
     const result = await model.generateContent(prompt);
-
     const response = await result.response;
     const text = response.text();
     
@@ -39,5 +47,5 @@ module.exports = async (req, res) => {
     console.error('Error calling Gemini API:', error);
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
-};
+}
 

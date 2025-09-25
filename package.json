@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "AI-Augmented Textbook",
   "main": "index.html",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,3 +11,4 @@
     "@google/generative-ai": "^0.15.0"
   }
 }
+

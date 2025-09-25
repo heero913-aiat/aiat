@@ -1,9 +1,15 @@
 // /api/tts.js
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
     
+    const apiKey = process.env.GOOGLE_API_KEY;
+    if (!apiKey) {
+        console.error('GOOGLE_API_KEY is not set in Vercel environment variables.');
+        return res.status(500).json({ error: 'Server configuration error: API key is missing.' });
+    }
+
     try {
         const { script, persona } = req.body;
         if (!script) {
@@ -16,7 +22,6 @@ module.exports = async (req, res) => {
             case '차분한 분석가': voiceName = 'Charon'; break;
         }
         
-        const apiKey = process.env.GOOGLE_API_KEY;
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
 
         const payload = { 
@@ -57,6 +62,7 @@ module.exports = async (req, res) => {
 
     } catch (error) {
         console.error('Error calling TTS API:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 };
+
